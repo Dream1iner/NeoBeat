@@ -1,6 +1,7 @@
 # NeoBeat - Ipod Classic Rockbox theme
 
 NeoBeat v1.0
+
 Developed by Murat
 Designed by Sabina
 30.11.2024
