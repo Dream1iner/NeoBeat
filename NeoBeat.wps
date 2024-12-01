@@ -1,0 +1,142 @@
+##### Disabling Status Bar on WPS
+%wd
+
+
+###### Fonts  
+%Fl(2, 16-1-Roboto-Regular.fnt)
+%Fl(3, 24-1-Roboto-Regular.fnt)
+%Fl(4, 25-1-Roboto-Regular.fnt)
+%Fl(5, 22-1-Roboto-Regular.fnt)
+%Fl(6, 12-1-Roboto-Regular.fnt)
+%Fl(7, 63-5-Roboto-Light.fnt)
+%Fl(8, 12-1-Roboto-Regular.fnt)
+%Fl(9, 22-1-Roboto-Regular.fnt)
+
+
+###### Icons
+%xl(Q,battery.bmp,0,0,11)
+%xl(wpsBG,wps_bg.bmp)
+%xl(pbBackDrop, pb_bg.bmp)
+%xl(P,playback.bmp,0,0,4)
+%xl(R,repeat.bmp,0,0,2)
+%xl(S,shuffle.bmp,0,0,2)
+
+%xl(F,albumFrame.bmp)
+%xl(B,wpsplayB.bmp,0,0,2)
+%xl(wpsLockBG, wpsLockBG.bmp)
+%xl(U,lockShuf.bmp,0,0,2)
+%xl(Y,lockRep.bmp,0,0,2)
+%xl(LpbBackDrop,lockPB_BG.bmp)
+%xl(catHolder,placeHolderCat.bmp)
+%xl(L,lock.bmp)
+
+
+###### Background Layer
+%V(0,0,-,-,-)%VB
+%?mh<%Vd(Cleaner)%xd(wpsLockBG)%Vd(LOCK2)|%Vd(Cleaner)%Vd(TitleBar)%Vd(Art)%Vd(PB)%Vd(BGVP)>
+%Vl(Cleaner,0,0,-,-,-)
+
+###### Foreground Layer
+%V(0,0,-,-,-)
+%Vl(BGVP,59,51,-,-,-)%xd(wpsBG)
+
+# %Vl(Art,108,51,85,85,-)<%?C<%C%Cl(0,0,85,85,c,c)%Cd|%Vd(b)>
+%Vl(Art,108,51,85,85,-)<%?C<%Cl(0,0,85,85,c,c)%Cd|%xd(catHolder)>
+
+# Time 
+%Vl(TitleBar,16,4,60,25,3)%Vs(color,ffffff)%al%cH:%cM
+
+# Date
+%Vl(TitleBar,75,4,-75,25,3)%Vs(color,b5b2b5)%ac%ca %cd %cb
+
+# Battery
+%Vl(TitleBar,269,8,34,20,-)%?bc<%?bl<%t(1)%xd(Qk);%t(1)%xd(Qh)|%t(1)%xd(Qh);%t(1)%xd(Qg)|%t(1)%xd(Qg);%t(1)%xd(Qf)|%t(1)%xd(Qf);%t(1)%xd(Qe)|%t(1)%xd(Qe);%t(1)%xd(Qd)|%t(1)%xd(Qd);%t(1)%xd(Qc)|%t(1)%xd(Qc);%t(1)%xd(Qb)|%t(1)%xd(Qa);%t(1)%xd(Qb)>|%?bl<%xd(Qj)|%xd(Qj)|%xd(Qh)|%xd(Qg)|%xd(Qf)|%xd(Qe)|%xd(Qd)|%xd(Qc)|%xd(Qb)|%xd(Qa)>>
+
+# Artist + Track
+%Vl(Art,16,154,-18,26,4)%Vs(color,ffffff)%s%al%?ia<%ia - |>%?it<%it|%fn>
+
+# Conditional viewport for album art + placeholder background if no album art found
+# %?C<%C|>
+
+# %Vl(Art,108,51,85,85,-)<%?C<%Cl(0,0,85,85,c,c)%Cd|%Vd(b)>
+# %Vl(Art,108,51,85,85,-)<%?C<%Cl(0,0,85,85,c,c)%Cd|%xd(catHolder)>
+
+%Vl(a,108,51,85,85,-)%Cl(0,0,85,85,c,c)%Cd
+%Vl(b,108,51,85,85,-)%xd(catHolder)
+
+# Progress bar 290 × 5
+%Vl(PB,17,180,-17,16,-)
+%?mv<%pv(-,-,286,5, pb.bmp, backdrop, pbBackDrop)|%pb(-,-,286,5, pb.bmp, backdrop, pbBackDrop)>
+
+# Track length (elapsed)
+%Vl(PB,16,203,45,14,6)%Vf(7c7c7c)
+%al%pc
+
+# Track length (total) (!!!for some reason, the total time is 4px more to the left than the elapsed time, otherwise they are not aligned in UI!!!)
+%Vl(PB,260,203,45,14,6)%Vf(7c7c7c)
+%ar%pt 
+
+# Playback controls
+%Vl(PB,145,203,30,30,-)
+%ac%?mp<|%xd(Pb)|%xd(Pa)|%xd(Pc)|%xd(Pd)>
+
+# Repeat
+%Vl(PB,97,211,15,15,-)
+%ac%?mm<%xd(Ra)|%xd(Rb)|%xd(Rb)|%xd(Rb)|%xd(Rb)>
+
+# Shuffle
+%Vl(PB,206,211,15,15,-)
+%ac%?ps<%xd(Sb)|%xd(Sa)>
+
+
+###### LOCK screen layout   
+# %Vl(Cleaner,0,0,-,-,-)%VB%dr(0,0,-,-,282931)
+# %Vl(LockRefresh,0,0,-,-,-)
+
+###### WPS + Music Lock screen layout
+%Vl(LOCK2,91,129,194,23,9)%s%al%?ia<%ia|>
+%Vl(LOCK2,91,150,194,25,3)%Vs(color, ffffff)%s%al%?it<%it|%fn>
+
+# Conditional viewport for album art + placeholder background if no album art found
+# %Vl(alock,33,129,47,47,-)%VB%Cl(0,0,47,47,c,c)%Cd
+# %Vl(alock,33,129,47,47,-)%Cl(0,0,47,47,c,c)%Cd
+# ^^^ WTF is with second Cl?
+# %Vl(aflock,32,128,49,49,-)%xd(F)
+
+# %Vl(LOCK2,33,129,47,47,-)%?C<%Cl(0,0,47,47,c,c)%Cd%xd(F)|>>
+%Vl(LOCK2,33,129,47,47,-)%?C<%xd(F)%Cd|>>
+
+# Battery on lockscreen
+%Vl(LOCK2,269,8,34,20,-)%?bc<%?bl<%t(1)%xd(Qk);%t(1)%xd(Qh)|%t(1)%xd(Qh);%t(1)%xd(Qg)|%t(1)%xd(Qg);%t(1)%xd(Qf)|%t(1)%xd(Qf);%t(1)%xd(Qe)|%t(1)%xd(Qe);%t(1)%xd(Qd)|%t(1)%xd(Qd);%t(1)%xd(Qc)|%t(1)%xd(Qc);%t(1)%xd(Qb)|%t(1)%xd(Qa);%t(1)%xd(Qb)>|%?bl<%xd(Qj)|%xd(Qj)|%xd(Qh)|%xd(Qg)|%xd(Qf)|%xd(Qe)|%xd(Qd)|%xd(Qc)|%xd(Qb)|%xd(Qa)>>
+
+# Date on lockscreen
+%Vl(LOCK2,50,26,-50,24,5)%Vs(color, ffffff)%ac%ca %cd %cb
+
+# Time on lockscreen
+%Vl(LOCK2,92,48,-92,64,7)%Vs(color, ffffff)%ac%cH:%cM
+
+# Lockscreen playback
+%Vl(LOCK2,152,199,16,16,-)
+%ac%?mp<|%xd(Bb)|%xd(Ba)|>
+
+# Lockscreen repeat icon
+%Vl(LOCK2,103,202,10,12,-)
+%ac%?mm<%xd(Ya)|%xd(Yb)|%xd(Yb)|%xd(Yb)|%xd(Yb)>
+
+# Lockscreen shuffle icon
+%Vl(LOCK2,207,202,10,12,-)
+%ac%?ps<%xd(Ub)|%xd(Ua)>
+
+# Lockscreen Progress bar 252 x 4
+%Vl(LOCK2,34,175,252,15,-)
+%pb(-,-,252,4, lockPB.bmp, backdrop, LpbBackDrop)
+
+# Lockscreen track length (elapsed)
+%Vl(LOCK2,34,195,35,14,8)%Vf(a5a2a5)
+%al%pc
+
+# Lockscreen track length (total) 
+%Vl(LOCK2,251,195,35,14,8)%Vf(a5a2a5)
+%ar%pt
+
+# %Vl(a,108,51,85,85,-)%Cl(0,0,85,85,c,c)%Cd

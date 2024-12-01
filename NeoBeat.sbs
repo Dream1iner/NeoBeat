@@ -1,0 +1,227 @@
+# Disable status bar
+%wd
+
+###### Fonts
+
+%Fl(2, 16-1-Roboto-Regular.fnt)
+%Fl(3, 24-1-Roboto-Regular.fnt)
+%Fl(4, 22-1-Roboto-Regular.fnt)
+%Fl(6, 63-5-Roboto-Light.fnt)
+%Fl(7, 12-1-Roboto-Regular.fnt)
+%Fl(8, 28-1-Roboto-Regular.fnt)
+%Fl(9, 96-6-Roboto-Light.fnt)
+%Fl(10, 40-2-Roboto-Light.fnt)
+%Fl(11, 22-1-Roboto-Regular.fnt)
+
+###### Icons
+%xl(F,albumFrame.bmp)
+%xl(Q,battery.bmp,0,0,11)
+%xl(P,play_pause.bmp,0,0,2)
+%xl(B,wpsplayB.bmp,0,0,2)
+
+###### Lock screen Images
+%xl(CleanBG,bg.bmp)
+%xl(usbScreen,USBScreen.bmp)
+%xl(L,lock.bmp)
+%xl(wpsLockBG, wpsLockBG.bmp)
+%xl(U,lockShuf.bmp,0,0,2)
+%xl(Y,lockRep.bmp,0,0,2)
+%xl(LpbBackDrop,lockPB_BG.bmp)
+ 
+# QS screen Images
+%xl(QsBg,qsBG.bmp)
+%xl(C,qs_sh.bmp,0,0,2)
+%xl(D,qs_rep.bmp,0,0,5)
+
+%xl(qsBRbg,qsBRbg.bmp)
+%xl(qsVLbg,qsVLbg.bmp)
+
+
+###### Background Layer
+%V(0,0,-,-,-)%VB
+
+# %?and(%if(%cs, !=, 21),%if(%cs, !=, 99))<%?mh<%?mp<%Vd(LOCK)%Vd(Cleaner)|%xd(wpsLockBG)%Vd(LOCK2)>>>
+%?if(%cs, !=, 21)<%?mh<%?mp<%Vd(Cleaner)%Vd(LOCK)|%Vd(Cleaner)%Vd(LOCK2)%xd(wpsLockBG)>>>
+
+# USB screen
+%?if(%cs, =, 21)<%?mh<%xd(usbScreen)%Vd(USB)%Vd(TitleBar)|%xd(usbScreen)%Vd(USB)%Vd(TitleBar)>>
+
+
+###### Foreground Layer
+%V(0,0,-,-,-)
+
+# Lockscreen logic should not be moved from here otherwise CRASH
+%?and(%if(%mh, =, h),%if(%C, !=, A))<%Vd(ar)%Vd(af)|%Vd(br)>
+
+# %?if(%cs, =, 1)<%?mh<%?pS(0.2)<%Vd(Cleaner)%Vd(LOCK2)>>>
+# %?if(%cs, =, 1)<%?mh<%?pS(0.2)<%Vd(LOCK2)%Vd(Cleaner)>>>
+# ^^^ so far the second best but LOCK is need to be fixed
+
+# %?if(%cs, =, 1)<%?pS(0.1)<%?mh<%Vd(LOCK2)%Vd(Cleaner)|>>>
+# ^^^ so far the best but LOCK is need to be fixed
+
+# %?if(%cs, =, 1)<%?mh<%?mp<%?pS(0.2)<%Vd(LOCK)%Vd(Cleaner)|%Vd(LOCK2)%Vd(Cleaner)>>>>
+### ^^^ THIS PART CREATES ISSUES
+
+###### Settings menu Info viewport 
+# %?if(%cs, =, 1)<%?mh<%VI(LOCK)%Vd(LOCK)|%VI(DB)%Vd(DB)%Vd(TitleBar)%Vd(TrackBar)>>
+%?if(%cs, =, 1)<%?mh<|%VI(DB)%Vd(DB)%Vd(TitleBar)%Vd(TrackBar)>>
+%Vi(DB,5,48,315,-40,1)
+
+### Defining what to display 
+%?and(%if(%cs, !=, 1),%if(%cs, !=, 3),%if(%cs, !=, 2))<%?mh<|%VI(FW)%Vd(FW)%Vd(TitleBar)>>
+%?or(%if(%cs, =, 2),%if(%cs, =, 3))<%Vd(TitleBar)>
+
+%?if(%cs, =, 10)<%VI(SmallQS)%Vd(QS)|>
+%Vi(SmallQS,0,185,50,50,2)%Vf(292831)
+   ^^^   ^^^
+# OOB issues if changed to 0,0,0,0
+# SmallQS is used to draw "invisible" default QS 
+
+%?if(%cs, =, 21)<%VI(USB)>
+
+# Lockscreen logic (moved to beginning of the file to work as intended)
+%?if(%cs, =, 1)<%?mh<|%Vd(Reminder)%?mp<%Vd(HomescreenWidget)|%Vd(HomescreenWidget)|%Vd(HomescreenWidget)|>>>
+%?if(%cs, =, 1)<%?mh<|%Vd(ScrollReminder)%?mp<%Vd(HomescreenWidget)|%?mp<|||||||>>>>
+# both parts needed to draw Reminder
+
+# %?if(%cs, =, 3)<%Vd(Record) # No Recording Screen yet
+# %?and(%if(%cs, =, 16),%if(%Lt, =, %Sx(System)))<%Vd(SysInfo)> # No specific System Info screen yet
+
+# Refresh lockscreen on song change
+# %?if(%cs, =, 1)<%?mh<%?pS(0.2)<%Vd(Cleaner)>>>
+# %?mh<%?pS(0.2)<%Vd(Cleaner)%Vd(LOCK2)>>
+# flashing issues
+
+# Forcing our USB screen to be over system image
+%Vi(USB,0,0,1,1,4)
+
+# Full width viewport init for Settings menu
+%Vi(FW,14,42,-15,-10,-)
+
+# Unlock screen reminder  
+%Vl(Reminder,30,108,-30,50,10)%Vs(color,ffffff)%acScroll to Start
+
+# Date for main and USB screen + menu name for other screens
+%Vl(TitleBar,75,4,-75,25,3)%Vs(color,ffffff)%?if(%cs,=,1)<%ac%ca %cd %cb|%?if(%cs,=,21)<%ac%ca %cd %cb|%ac%Lt>>
+
+# Time 
+%Vl(TitleBar,16,4,60,25,3)%Vf(ffffff)
+%al%cH:%cM
+
+# Play/pause indicator
+%Vl(TrackBar,12,208,20,20,-)
+%al%?mp<|%xd(Pb)|%xd(Pa)|>
+
+# Track data
+%Vl(TrackBar,40,206,-20,25,3)%Vs(color,ffffff)%s%al%?it<%it - |>%?ia<%ia|%fn>
+
+# Main menu battery
+%Vl(TitleBar,269,8,34,20,-)%?bc<%?bl<%t(1)%xd(Qk);%t(1)%xd(Qh)|%t(1)%xd(Qh);%t(1)%xd(Qg)|%t(1)%xd(Qg);%t(1)%xd(Qf)|%t(1)%xd(Qf);%t(1)%xd(Qe)|%t(1)%xd(Qe);%t(1)%xd(Qd)|%t(1)%xd(Qd);%t(1)%xd(Qc)|%t(1)%xd(Qc);%t(1)%xd(Qb)|%t(1)%xd(Qa);%t(1)%xd(Qb)>|%?bl<%xd(Qj)|%xd(Qj)|%xd(Qh)|%xd(Qg)|%xd(Qf)|%xd(Qe)|%xd(Qd)|%xd(Qc)|%xd(Qb)|%xd(Qa)>>
+
+###### Homescreen and main tiles  
+%Vl(HomescreenWidget,0,25,320,150,1)
+%?if(%cs, = , 1)<%Lb(MainMenuVP,75,75,tile)%Vd(TitleBar)>
+
+%Vl(MainMenuVP,3,0,80,80,1)
+
+%xl(M,mainIcons.bmp,0,0,8) # normal icons
+%xl(S,mainIconsSelector.bmp,0,0,8) # selected icons
+%?Lc<%xd(S, %LN)|%xd(M, %LN)> # highlights selected icons
+
+
+###### LOCK screen layout   
+%Vl(Cleaner,0,0,-,-,-)%?mp<%xd(CleanBG)|>
+# solves issue with LOCK not covering underlaying viewports after playback is done
+
+# %?if(%mp, =, 1)<%?mh<%VI(LOCK)%Vd(LOCK)|||>>
+# ^^^^ separate lock screen with playback
+# %?mh<%VI(LOCK)%Vd(LOCK)|>
+
+# Date on lock screen
+%Vl(LOCK,50,58,-50,28,8)%Vf(ffffff)
+%ac%ca %cd %cb
+
+# Time on lockscreen
+%Vl(LOCK,15,88,-15,100,9)%Vf(ffffff)
+%ac%cH:%cM
+
+# Battery on lockscreen
+%Vl(LOCK,269,8,34,20,-)%?bc<%?bl<%t(1)%xd(Qk);%t(1)%xd(Qh)|%t(1)%xd(Qh);%t(1)%xd(Qg)|%t(1)%xd(Qg);%t(1)%xd(Qf)|%t(1)%xd(Qf);%t(1)%xd(Qe)|%t(1)%xd(Qe);%t(1)%xd(Qd)|%t(1)%xd(Qd);%t(1)%xd(Qc)|%t(1)%xd(Qc);%t(1)%xd(Qb)|%t(1)%xd(Qa);%t(1)%xd(Qb)>|%?bl<%xd(Qj)|%xd(Qj)|%xd(Qh)|%xd(Qg)|%xd(Qf)|%xd(Qe)|%xd(Qd)|%xd(Qc)|%xd(Qb)|%xd(Qa)>>
+# Lock icon on lockscreen
+%Vl(LOCK,20,7,34,20,-)
+%xd(L)
+
+
+###### USB screen layout
+# USB screen data
+%Vl(USB,82,56,150,24,3)%Vs(color,ffffff)%alUSB Connected
+%Vl(USB,82,82,190,24,2)%Vs(color,a5a2a5)%al%t(1)Eject Before Disconnecting;%t(0.5);
+
+%Vl(USB,82,116,200,24,3)%Vs(color,ffffff)%alTime To Full Charge
+%Vl(USB,82,141,150,24,2)%Vs(color,a5a2a5)%al%?bl<~ 2 hours|~ 1.5 hours|~ 1 hour|~ 30 minutes|~ 15 minutes>
+
+%Vl(USB,82,172,170,24,3)%Vs(color,ffffff)%alBattery Voltage
+%Vl(USB,82,197,100,24,2)%Vs(color,a5a2a5)%al%bv V
+
+
+###### WPS + Music Lock screen layout
+%Vl(LOCK2,91,129,194,23,11)%s%al%?ia<%ia|>
+%Vl(LOCK2,91,150,194,25,3)%Vs(color, ffffff)%s%al%?it<%it|%fn>
+
+# Conditional viewport for album art + placeholder background if no album art found
+%Vl(ar,33,129,47,47,-)%VB%Cl(0,0,47,47,c,c)%Cd
+%Vl(af,32,128,49,49,-)%xd(F)
+# %Vl(br,33,129,47,47,-)%xd(catHolderS)
+
+# Battery on lockscreen
+%Vl(LOCK2,269,8,34,20,-)%?bc<%?bl<%t(1)%xd(Qk);%t(1)%xd(Qh)|%t(1)%xd(Qh);%t(1)%xd(Qg)|%t(1)%xd(Qg);%t(1)%xd(Qf)|%t(1)%xd(Qf);%t(1)%xd(Qe)|%t(1)%xd(Qe);%t(1)%xd(Qd)|%t(1)%xd(Qd);%t(1)%xd(Qc)|%t(1)%xd(Qc);%t(1)%xd(Qb)|%t(1)%xd(Qa);%t(1)%xd(Qb)>|%?bl<%xd(Qj)|%xd(Qj)|%xd(Qh)|%xd(Qg)|%xd(Qf)|%xd(Qe)|%xd(Qd)|%xd(Qc)|%xd(Qb)|%xd(Qa)>>
+
+# Date on lockscreen
+%Vl(LOCK2,70,26,-70,23,4)%Vs(color, ffffff)%ac%ca %cd %cb
+
+# Time on lockscreen
+%Vl(LOCK2,92,48,-92,64,6)%Vs(color, ffffff)%ac%cH:%cM
+
+# Lockscreen playback
+%Vl(LOCK2,152,199,16,16,-)
+%ac%?mp<|%xd(Bb)|%xd(Ba)|>
+
+# Lockscreen shuffle icon
+%Vl(LOCK2,207,202,10,12,-)
+%ac%?ps<%xd(Ub)|%xd(Ua)>
+
+# Lockscreen repeat icon
+%Vl(LOCK2,103,202,10,12,-)
+%ac%?mm<%xd(Ya)|%xd(Yb)|%xd(Yb)|%xd(Yb)|%xd(Yb)>
+
+# Lockscreen Progress bar 252 x 4
+%Vl(LOCK2,34,175,252,15,-)
+%pb(-,-,252,4, lockPB.bmp, backdrop, LpbBackDrop)
+
+# Lockscreen track length (elapsed)
+%Vl(LOCK2,34,195,35,14,7)%Vf(a5a2a5)
+%al%pc
+
+# Lockscreen track length (total)
+%Vl(LOCK2,251,195,35,14,7)%Vf(a5a2a5)
+%ar%pt
+
+
+###### QS screen layout
+# QS background
+%Vl(QS,0,40,-,-,-)%xd(QsBg)
+
+# QS date
+%Vl(QS,90,4,-90,24,3)%ac%ca %cd %cb
+
+# QS Shuffle and Repeat icons
+%Vl(QS,32,82,40,41,-)
+%ac%?mm<%xd(Da)|%xd(Db)|%xd(Dc)|%xd(Dd)|%xd(De)>
+
+%Vl(QS,32,139,40,41,-)
+%ac%?ps<%xd(Cb)|%xd(Ca)>
+
+# Brightness/Volume indication bar
+%Vl(QS,248,82,40,98,-)
+%?mv(1)<%pv(-,-,40,98,qsVLpb.bmp, backdrop, qsVLbg)|%St(-,-,40,98,qsBRpb.bmp,backdrop,qsBRbg,setting,brightness)>
