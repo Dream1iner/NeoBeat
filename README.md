@@ -10,7 +10,7 @@ Designed by Sabina
 
 # ASL (Author-Specific License)
 
-1. This software is provided "as is," 
+1. This software is provided "as is" 
   and the developer assumes no responsibility for any issues arising from its use.
 
 2. This software is distributed free of charge.
