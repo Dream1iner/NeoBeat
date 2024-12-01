@@ -22,3 +22,4 @@ Designed by Sabina
    without explicit written permission from the developer.
 
 
+Detailed info - https://www.notion.so/NeoBeat-Ipod-Classic-Rockbox-theme-14f02a4a53be8028a47dff2ae51f8894
